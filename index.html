@@ -55,11 +55,11 @@
         const message = document.getElementById('message');
 
         if (email) {
-            fetch('https://script.google.com/macros/s/AKfycbxNkb7uh-1ibBBdmgMkXG_BC7mSlJgTBt-Xc5d6lvqsBEB4Jl2wmQEmHrAtq_QagdM/exec', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email })
-            })
+            fetch('YOUR_NEW_WEB_APP_URL', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email })
+})
             .then(response => response.json())
             .then(data => {
                 if (data.status === "success") {
