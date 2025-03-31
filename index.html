@@ -52,23 +52,33 @@
     </div><script>
     function registerUser() {
         const email = document.getElementById('email').value;
+        const message = document.getElementById('message');
+
         if (email) {
-            fetch('https://script.google.com/macros/s/AKfycbxfj-u2Vzi8-bR3SOKnP8WER1MXmRiElYO1jyZCiMcb/dev', {
+            fetch('https://script.google.com/macros/s/AKfycbxNkb7uh-1ibBBdmgMkXG_BC7mSlJgTBt-Xc5d6lvqsBEB4Jl2wmQEmHrAtq_QagdM/exec', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email })
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => {
-                document.getElementById('message').innerText = "Thank you for signing up!";
-                document.getElementById('email').value = "";
+                if (data.status === "success") {
+                    message.innerText = "Thank you for signing up!";
+                    message.style.color = "green";
+                    document.getElementById('email').value = "";
+                } else {
+                    message.innerText = "Error: " + data.message;
+                    message.style.color = "red";
+                }
             })
             .catch(error => {
-                document.getElementById('message').innerText = "Error signing up. Try again later.";
+                message.innerText = "Error signing up. Try again later.";
+                message.style.color = "red";
                 console.error('Error:', error);
             });
         } else {
-            document.getElementById('message').innerText = "Please enter a valid email.";
+            message.innerText = "Please enter a valid email.";
+            message.style.color = "red";
         }
     }
 </script>
