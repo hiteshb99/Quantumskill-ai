@@ -58,14 +58,13 @@
             const message = document.getElementById('message');
 
             if (email) {
-                fetch('https://script.google.com/macros/s/AKfycby2_xFLJWtGWZk4kQ7V-Q8f1hD21o3q274_yRso19A/exec', {
+                fetch('https://script.google.com/macros/s/AKfycbxWK5tGyIJtUamJBR3mX1KBVLsKjVxW7Tp65OYUMK6BhWicsoO5W8vmPfCEEPJQNln8/exec', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log("Server Response:", data); // Debugging
                     if (data.status === "success") {
                         message.innerText = "Thank you for signing up!";
                         message.style.color = "green";
@@ -76,9 +75,9 @@
                     }
                 })
                 .catch(error => {
-                    message.innerText = "Error signing up. Check console for details.";
+                    message.innerText = "Error signing up. Try again later.";
                     message.style.color = "red";
-                    console.error('Fetch Error:', error);
+                    console.error('Error:', error);
                 });
             } else {
                 message.innerText = "Please enter a valid email.";
