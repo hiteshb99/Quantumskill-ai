@@ -1,42 +1,90 @@
-function doGet(e) {
-  return ContentService.createTextOutput("Web App is running").setMimeType(ContentService.MimeType.TEXT);
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumSkill AI - Join the Beta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QuantumSkill AI</h1>
+        <p>Sign up for early access to our AI-powered skill-building platform!</p>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <br>
+        <button onclick="registerUser()">Join the Beta</button>
+        <p id="message"></p>
+    </div>
 
-function doPost(e) {
-  try {
-    if (!e || !e.postData || !e.postData.contents) {
-      return ContentService.createTextOutput(JSON.stringify({ status: "error", message: "No data received" }))
-             .setMimeType(ContentService.MimeType.JSON);
-    }
+    <script>
+        function registerUser() {
+            const email = document.getElementById('email').value.trim();
+            const messageElement = document.getElementById('message');
 
-    var data = JSON.parse(e.postData.contents);
-    if (!data.email || !validateEmail(data.email)) {
-      return ContentService.createTextOutput(JSON.stringify({ status: "error", message: "Invalid email" }))
-             .setMimeType(ContentService.MimeType.JSON);
-    }
+            if (!email) {
+                messageElement.style.color = "red";
+                messageElement.innerText = "Please enter a valid email.";
+                return;
+            }
 
-    var sheet = SpreadsheetApp.openById("1FQZgBanevy2x-ut_YZhrwt1koIYQlIKqWvxaPUJV-Y0").getActiveSheet();
-    sheet.appendRow([data.email, new Date()]); // Add timestamp
-
-    var response = {
-      status: "success",
-      message: "Email saved successfully"
-    };
-
-    return ContentService.createTextOutput(JSON.stringify(response))
-           .setMimeType(ContentService.MimeType.JSON);
-  } catch (error) {
-    var errorResponse = {
-      status: "error",
-      message: error.toString()
-    };
-
-    return ContentService.createTextOutput(JSON.stringify(errorResponse))
-           .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-function validateEmail(email) {
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
+            fetch('https://script.google.com/macros/s/AKfycbyrZzxMT_YQ8ZZzNx8GCiTBn___rWzOPBZBMGVUPdZ4PEiCDc1LvgAqZTpc8r6RqbPrWg/exec', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    messageElement.style.color = "green";
+                    messageElement.innerText = "Thank you for signing up!";
+                    document.getElementById('email').value = "";
+                } else {
+                    messageElement.style.color = "red";
+                    messageElement.innerText = "Error: " + data.message;
+                }
+            })
+            .catch(error => {
+                messageElement.style.color = "red";
+                messageElement.innerText = "Error signing up. Try again later.";
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
