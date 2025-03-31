@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,37 +51,40 @@
         <button onclick="registerUser()">Join the Beta</button>
         <p id="message"></p>
     </div>
+
     <script>
         function registerUser() {
             const email = document.getElementById('email').value;
-            const message = document.getElementById('message');if (email) {
-            fetch('https://script.google.com/macros/s/AKfycby2_xFLJWtGWZk4kQ7V-Q8f1hD21o3q274_yRso19A/dev', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    message.innerText = "Thank you for signing up!";
-                    message.style.color = "green";
-                    document.getElementById('email').value = "";
-                } else {
-                    message.innerText = "Error: " + data.message;
-                    message.style.color = "red";
-                }
-            })
-            .catch(error => {
-                message.innerText = "Error signing up. Try again later.";
-                message.style.color = "red";
-                console.error('Error:', error);
-            });
-        } else {
-            message.innerText = "Please enter a valid email.";
-            message.style.color = "red";
-        }
-    }
-</script>
+            const message = document.getElementById('message');
 
+            if (email) {
+                fetch('https://script.google.com/macros/s/AKfycby2_xFLJWtGWZk4kQ7V-Q8f1hD21o3q274_yRso19A/exec', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Server Response:", data); // Debugging
+                    if (data.status === "success") {
+                        message.innerText = "Thank you for signing up!";
+                        message.style.color = "green";
+                        document.getElementById('email').value = "";
+                    } else {
+                        message.innerText = "Error: " + data.message;
+                        message.style.color = "red";
+                    }
+                })
+                .catch(error => {
+                    message.innerText = "Error signing up. Check console for details.";
+                    message.style.color = "red";
+                    console.error('Fetch Error:', error);
+                });
+            } else {
+                message.innerText = "Please enter a valid email.";
+                message.style.color = "red";
+            }
+        }
+    </script>
 </body>
 </html>
