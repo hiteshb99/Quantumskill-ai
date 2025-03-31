@@ -1,1 +1,41 @@
-# Quantumskill-ai
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumSkill AI - Learn & Earn</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background-color: #f4f4f4; }
+        .container { max-width: 600px; margin: auto; padding: 20px; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 10px; }
+        h1 { color: #333; }
+        p { color: #666; }
+        .btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+        .btn:hover { background: #0056b3; }
+        input { width: 80%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; margin-top: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QuantumSkill AI</h1>
+        <p>Learn high-demand digital skills & get paid while learning! Join the future of AI-powered education.</p><input type="email" id="email" placeholder="Enter your email" required>
+    <button onclick="registerUser()">Join the Beta</button>
+    
+    <p id="message"></p>
+</div>
+
+<script>
+    function registerUser() {
+        const email = document.getElementById('email').value;
+        if (email) {
+            document.getElementById('message').innerText = "Thank you for signing up! We'll notify you soon.";
+            document.getElementById('email').value = "";
+            // Here we would send the email to a database (e.g., using Google Sheets API or Airtable)
+        } else {
+            document.getElementById('message').innerText = "Please enter a valid email.";
+        }
+    }
+</script>
+
+</body>
+</html>
