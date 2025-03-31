@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +37,7 @@
         }
         #message {
             margin-top: 10px;
-            font-weight: bold;
+            color: green;
         }
     </style>
 </head>
@@ -50,41 +49,29 @@
         <br>
         <button onclick="registerUser()">Join the Beta</button>
         <p id="message"></p>
-    </div>
-
-    <script>
-        function registerUser() {
-            const email = document.getElementById('email').value.trim();
-            const messageElement = document.getElementById('message');
-
-            if (!email) {
-                messageElement.style.color = "red";
-                messageElement.innerText = "Please enter a valid email.";
-                return;
-            }
-
-            fetch('https://script.google.com/macros/s/AKfycbyrZzxMT_YQ8ZZzNx8GCiTBn___rWzOPBZBMGVUPdZ4PEiCDc1LvgAqZTpc8r6RqbPrWg/exec', {
+    </div><script>
+    function registerUser() {
+        const email = document.getElementById('email').value;
+        if (email) {
+            fetch('https://script.google.com/macros/s/AKfycbxfj-u2Vzi8-bR3SOKnP8WER1MXmRiElYO1jyZCiMcb/dev', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email })
             })
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
-                if (data.status === "success") {
-                    messageElement.style.color = "green";
-                    messageElement.innerText = "Thank you for signing up!";
-                    document.getElementById('email').value = "";
-                } else {
-                    messageElement.style.color = "red";
-                    messageElement.innerText = "Error: " + data.message;
-                }
+                document.getElementById('message').innerText = "Thank you for signing up!";
+                document.getElementById('email').value = "";
             })
             .catch(error => {
-                messageElement.style.color = "red";
-                messageElement.innerText = "Error signing up. Try again later.";
+                document.getElementById('message').innerText = "Error signing up. Try again later.";
                 console.error('Error:', error);
             });
+        } else {
+            document.getElementById('message').innerText = "Please enter a valid email.";
         }
-    </script>
+    }
+</script>
+
 </body>
 </html>
