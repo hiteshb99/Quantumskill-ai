@@ -56,7 +56,7 @@
         function registerUser() {
             const email = document.getElementById('email').value;
             if (email) {
-                fetch('https://script.google.com/macros/s/AKfycbxfj-u2Vzi8-bR3SOKnP8WER1MXmRiElYO1jyZCiMcb/dev', {
+                fetch('https://script.google.com/macros/s/AKfycbwe77TLERn0xai7fFePVrnCPzdT5Z_2xZVkZNHs5nEKZQwHWJ8YXzgoEedSzJir_ammHg/exec', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email })
