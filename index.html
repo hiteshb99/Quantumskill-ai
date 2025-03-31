@@ -58,27 +58,24 @@
             const message = document.getElementById('message');
 
             if (email) {
-                fetch('https://script.google.com/macros/s/AKfycbxWK5tGyIJtUamJBR3mX1KBVLsKjVxW7Tp65OYUMK6BhWicsoO5W8vmPfCEEPJQNln8/exec', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === "success") {
-                        message.innerText = "Thank you for signing up!";
-                        message.style.color = "green";
-                        document.getElementById('email').value = "";
-                    } else {
-                        message.innerText = "Error: " + data.message;
-                        message.style.color = "red";
-                    }
-                })
-                .catch(error => {
-                    message.innerText = "Error signing up. Try again later.";
-                    message.style.color = "red";
-                    console.error('Error:', error);
-                });
+                fetch('https://script.google.com/macros/s/AKfycby2_xFLJWtGWZk4kQ7V-Q8f1hD21o3q274_yRso19A/exec', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                mode: 'no-cors',  // ✅ Prevents CORS error
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.text())  // Apps Script may not return JSON when using no-cors
+            .then(data => {
+                message.innerText = "Thank you for signing up!";
+                message.style.color = "green";
+                document.getElementById('email').value = "";
+            })
+            .catch(error => {
+                message.innerText = "Error signing up. Try again later.";
+                message.style.color = "red";
+                console.error('Error:', error);
+            });
+
             } else {
                 message.innerText = "Please enter a valid email.";
                 message.style.color = "red";
